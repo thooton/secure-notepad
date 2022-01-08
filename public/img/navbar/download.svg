@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="download.svg"
+   xml:space="preserve"
+   style="enable-background: new 0 0 512 512"
+   viewBox="0 0 512 512"
+   y="0px"
+   x="0px"
+   id="Layer_1"
+   version="1.1"
+   width="20px"
+   height="20px"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata339"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs337" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="736"
+   inkscape:window-height="480"
+   id="namedview335"
+   showgrid="false"
+   inkscape:zoom="8.9095455"
+   inkscape:cx="1.142823"
+   inkscape:cy="16.988135"
+   inkscape:window-x="268"
+   inkscape:window-y="246"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1"
+   inkscape:document-rotation="0" />
+  <polygon
+   style="fill:#828282"
+   points="48.872,290.669 115.687,223.854 195.866,304.032 195.866,10.043 316.134,10.043                  316.134,304.032 396.314,223.854 463.129,290.669 256,497.797 "
+   id="polygon296" />
+  <polygon
+   style="fill:#6d6d6d"
+   points="463.129,290.669 396.314,223.854 316.134,304.032 316.134,10.043 256,10.043 256,497.797 "
+   id="polygon298" />
+  <path
+   d="M256,512L34.669,290.669l81.017-81.017l70.136,70.136V0h140.354v279.787l70.136-70.136l81.018,81.017L256,512z                 M63.074,290.669L256,483.595l192.926-192.926l-52.614-52.613l-90.221,90.221V20.085H205.907v308.191l-90.221-90.221L63.074,290.669                 z"
+   id="path300" />
+  <rect
+   x="327.81"
+   y="268.403"
+   transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 325.158 846.2971)"
+   style="fill:#ffffff"
+   width="20.085"
+   height="174.807"
+   id="rect302" />
+  <g
+   id="g304" />
+  <g
+   id="g306" />
+  <g
+   id="g308" />
+  <g
+   id="g310" />
+  <g
+   id="g312" />
+  <g
+   id="g314" />
+  <g
+   id="g316" />
+  <g
+   id="g318" />
+  <g
+   id="g320" />
+  <g
+   id="g322" />
+  <g
+   id="g324" />
+  <g
+   id="g326" />
+  <g
+   id="g328" />
+  <g
+   id="g330" />
+  <g
+   id="g332" />
+</svg>

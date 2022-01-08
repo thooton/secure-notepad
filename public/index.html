@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Notepad</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#747474" id="theme-color">
+	<meta name="application-name" content="Notepad" />
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link rel="icon" href="favicon.ico">
+	<link rel="manifest" href="manifest.json">
+	<link rel="apple-touch-icon" href="img/notepad-apple-icon.png">
+	<link rel="mask-icon" href="img/icon-mask.svg" color="black">
+</head>
+
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<span class="navbar-brand app-heading">Notepad</span>
+				<span>
+					<a href="javascript:void(0);" id="backButton" class="navbar-brand hidden" title="Back to list">
+						<img src="img/navbar/back.svg" alt="Back Icon" />
+					</a>
+				</span>
+				<span>
+					<a href="javascript:void(0);" id="newNote" class="navbar-brand hidden" title="Create new note">
+						<img src="img/navbar/add-file.svg" alt="New Icon" />
+					</a>
+				</span>
+				<span>
+					<a href="javascript:void(0);" id="saveButton" class="navbar-brand hidden" title="Save notes">
+						<img src="img/navbar/save.svg" alt="Save Icon" />
+					</a>
+				</span>
+				
+				<span>
+					<a id="clearNotes" class="navbar-brand trash-icon hidden" title="Clear Note">
+						<img src="img/navbar/delete.svg" alt="Clear Icon" />
+					</a>
+				</span>
+				
+				<span>
+					<a id="mode" class="navbar-brand">
+						<img src="img/navbar/light-theme.svg" title="Enable light mode" alt="Light theme Icon"
+							id="light" />
+						<img src="img/navbar/dark-theme.svg" title="Enable dark mode" alt="Dark theme Icon" id="dark" />
+					</a>
+				</span>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="starter-template">
+			<table id="list" class="hidden"></table>
+			<form id="login">
+				<p><label for="uname">Username</label></p>
+				<p><input type="text" name="uname" required="true"></p>
+
+				<p><label for="psw">Password</label></p>
+				<p><input type="password" name="psw" id="pswfield" required="true"></p>
+
+				<p><label for="cnf">Confirm pwd (reg. only)</label></p>
+				<p><input type="password" name="cnf" id="cnffield"></p>
+
+				<p><button type="submit" id="lg_btn">Login</button> <button type="submit" id="rg_btn">Register</button>
+				</p>
+				<p id="error"></p>
+			</form>
+			<textarea id="note" class="hidden" autofocus></textarea>
+		</div>
+	</div>
+
+	<link href="css/alerty.css" rel="stylesheet">
+	<script src="js/alerty.min.js" type="text/javascript"></script>
+	<script src="js/jsencrypt.min.js" type="text/javascript"></script>
+	<script src="js/aes-js.min.js" type="text/javascript"></script>
+	<script src="js/text-endec.min.js" nomodule="" type="text/javascript"></script>
+	<script src="js/formdata.min.js" nomodule="" type="text/javascript"></script>
+	<script src="js/base64.min.js" type="text/javascript"></script>
+	<script src="js/utils.js" type="text/javascript"></script>
+	<script src="js/hybrid.js" type="text/javascript"></script>
+	<script src="js/app.js" type="text/javascript"></script>
+</body>
+
+</html>

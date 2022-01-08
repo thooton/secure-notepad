@@ -1,0 +1,180 @@
+button[disabled], html input[disabled] {
+  color: #696969;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  padding-top: 50px;
+  height: 100%;
+}
+
+.starter-template {
+  height: 100%;
+}
+
+textarea:hover,textarea,#list,#login {
+  width:100%;
+  font-size: 18px;
+  outline: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  outline:0px !important;
+  -webkit-appearance:none;
+  resize: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+input, button {
+  background-color: inherit;
+}
+
+#note, #login {
+	height: 100%;
+	padding: 8px;
+}
+
+.navbar-default {
+  background-color:#747474;
+  border-color:#747474;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #747474 !important;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #A1887F;
+}
+
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ecdbff;
+  background-color: #8e44ad;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ecdbff;
+  background-color: #8e44ad;
+}
+.navbar-default .navbar-toggle {
+  border-color: #A1887F;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #747474;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ecdbff;
+}
+
+#flash{
+  color: #64ff6a;
+  font-weight: bold;
+}
+
+.btn-custom {
+  margin-top: 9px;
+}
+
+#Rectangle {
+  fill: lightgreen;
+}
+
+#trash{
+  fill: lightcoral;
+}
+
+.trash-icon{
+  cursor: pointer;
+}
+
+.download-icon{
+  margin-top: 0px;
+  cursor: pointer;
+}
+
+.app-heading {
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.navbar-inverse .app-heading {
+  color: #B5B5B5;
+}
+
+.navbar-default .app-heading {
+  color: #EEEEEE;
+}
+
+.container {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+}
+
+textarea {
+  padding: 8px;
+  border: 1px solid #e6e4e4;
+}
+
+.dark textarea, .dark #login, .dark #list {
+  padding: 8px;
+  border: #000000;
+  background-color: #0d1117;
+  color: #dedede;
+}
+
+.dark textarea {
+	border-right: 1px solid #3e3e3e;
+	border-left: 1px solid #3e3e3e;
+}
+
+.dark{
+  background-color: #0d1117;
+}
+
+#mode{
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+}
+td, th {
+  padding: 8px;
+}
