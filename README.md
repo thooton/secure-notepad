@@ -22,6 +22,8 @@ Has not been tested on any version of Node other than v16.4.2.
 
 `npm install`
 
+`mkdir data`
+
 The settings for the Argon2id hashing function, as set in config.json, must be determined based on individual hardware requirements. 
 
 A helper program, `argon2id_calibration.js`, can be run with `node` to recommend the settings for Argon2id. It loosely follows the guidelines in the [argon2 specifications](https://www.password-hashing.net/argon2-specs.pdf) under 'Recommended parameters':
