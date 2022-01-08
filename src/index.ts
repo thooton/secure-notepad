@@ -58,13 +58,15 @@ if (config.ratelimiting) {
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(function (req, res, next) {
-    if (req.cookies.secret_word == config.secret_word || req.path.trim() == '/manifest.json') {
-        next();
-    } else {
-        res.sendFile(path.join(__dirname, '..', 'public', 'password.html'));
-    }
-});
+if (config.require_secret_word) {
+    app.use(function (req, res, next) {
+        if (req.cookies.secret_word == config.secret_word || req.path.trim() == '/manifest.json') {
+            next();
+        } else {
+            res.sendFile(path.join(__dirname, '..', 'public', 'password.html'));
+        }
+    });
+}
 
 app.use(express.static('public'));
 
