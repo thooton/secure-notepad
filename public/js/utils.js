@@ -1,3 +1,7 @@
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 var voidurl = 'javascript:void(0);';
 
 function postRequest(url, json, callback) {
@@ -5,17 +9,19 @@ function postRequest(url, json, callback) {
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(json));
+
     xhr.onload = function () {
         callback(this.responseText);
-    }
+    };
 }
 
 function getRequest(url, callback) {
     var xhr = new XMLHttpRequest();
+
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4)
-            callback(xhr.responseText);
-    }
+        if (xhr.readyState == 4) callback(xhr.responseText);
+    };
+
     xhr.open("GET", url, true);
     xhr.send(null);
 }
@@ -26,6 +32,7 @@ function getId(id) {
 
 function setHidden(id, value) {
     var elem = getId(id);
+
     if (value) {
         elem.classList.add('hidden');
     } else {
@@ -50,7 +57,7 @@ function getFileName() {
 }
 
 function currentDateString() {
-    const currentDate = new Date();
+    var currentDate = new Date();
     return currentDate.toISOString();
 }
 
@@ -67,7 +74,7 @@ function pad2(n) {
 }
 
 function parseFormatDate(iso) {
-    const parsed = new Date(iso);
+    var parsed = new Date(iso);
     return formatDate(parsed);
 }
 
@@ -79,15 +86,16 @@ function randomString(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
+
     for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() *
-            charactersLength));
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
+
     return result;
 }
 
 function getPWADisplayMode() {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    var isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
     if (document.referrer.startsWith('android-app://')) {
         return 'twa';
@@ -114,31 +122,27 @@ function enableLightMode(lightMetaColor, metaThemeColor) {
     document.getElementById('dark').classList.remove('hidden');
     metaThemeColor.setAttribute('content', lightMetaColor);
     localStorage.setItem('mode', 'light');
-}
+} // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 
-// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+
 if (!Object.keys) {
-    Object.keys = (function () {
+    Object.keys = function () {
         'use strict';
-        var hasOwnProperty = Object.prototype.hasOwnProperty,
-            hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-            dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ],
-            dontEnumsLength = dontEnums.length;
 
+        var hasOwnProperty = Object.prototype.hasOwnProperty,
+            hasDontEnumBug = !{
+                toString: null
+            }.propertyIsEnumerable('toString'),
+            dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+            dontEnumsLength = dontEnums.length;
         return function (obj) {
-            if (typeof obj !== 'function' && (typeof obj !== 'object' || obj === null)) {
+            if (typeof obj !== 'function' && (_typeof(obj) !== 'object' || obj === null)) {
                 throw new TypeError('Object.keys called on non-object');
             }
 
-            var result = [], prop, i;
+            var result = [],
+                prop,
+                i;
 
             for (prop in obj) {
                 if (hasOwnProperty.call(obj, prop)) {
@@ -153,30 +157,36 @@ if (!Object.keys) {
                     }
                 }
             }
+
             return result;
         };
-    }());
-}
+    }();
+} // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
 
-// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-if (!Array.prototype.indexOf)
-  Array.prototype.indexOf = (function(Object, max, min) {
-    "use strict"
+
+if (!Array.prototype.indexOf) Array.prototype.indexOf = function (Object, max, min) {
+    "use strict";
+
     return function indexOf(member, fromIndex) {
-      if (this === null || this === undefined)
-        throw TypeError("Array.prototype.indexOf called on null or undefined")
+        if (this === null || this === undefined) throw TypeError("Array.prototype.indexOf called on null or undefined");
+        var that = Object(this),
+            Len = that.length >>> 0,
+            i = min(fromIndex | 0, Len);
+        if (i < 0) i = max(0, Len + i); else if (i >= Len) return -1;
 
-      var that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len)
-      if (i < 0) i = max(0, Len + i)
-      else if (i >= Len) return -1
+        if (member === void 0) {
+            // undefined
+            for (; i !== Len; ++i) {
+                if (that[i] === void 0 && i in that) return i;
+            }
+        } else if (member !== member) {
+            // NaN
+            return -1; // Since NaN !== NaN, it will never be found. Fast-path it.
+        } else // all else
+            for (; i !== Len; ++i) {
+                if (that[i] === member) return i;
+            }
 
-      if (member === void 0) {        // undefined
-        for (; i !== Len; ++i) if (that[i] === void 0 && i in that) return i
-      } else if (member !== member) { // NaN
-        return -1 // Since NaN !== NaN, it will never be found. Fast-path it.
-      } else                          // all else
-        for (; i !== Len; ++i) if (that[i] === member) return i
-
-      return -1 // if the value was not found, then return -1
-    }
-  })(Object, Math.max, Math.min);
+        return -1; // if the value was not found, then return -1
+    };
+}(Object, Math.max, Math.min);
