@@ -221,7 +221,7 @@
 			postRequest('/save', encrypted, function (data) {
 				if (callback) callback();
 				saving = false;
-				getId('save').style.visibility = 'visible';
+				getId('saveButton').style.visibility = 'visible';
 				try {
 					var res = JSON.parse(data);
 
