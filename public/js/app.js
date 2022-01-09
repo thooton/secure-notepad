@@ -39,7 +39,7 @@
 
 	if (window.matchMedia) {
 		var matched = window.matchMedia('(prefers-color-scheme: dark)');
-		if (matched) matched.addEventListener('change', function (_ref) {
+		if (matched && matched.addEventListener) matched.addEventListener('change', function (_ref) {
 			var matches = _ref.matches;
 
 			// To override device's theme preference
@@ -70,7 +70,7 @@
 
 	if (window.matchMedia) {
 		var matched = window.matchMedia('(display-mode: standalone)');
-		if (matched) matched.addEventListener('change', function (_ref2) {
+		if (matched && matched.addEventListener) matched.addEventListener('change', function (_ref2) {
 			var matches = _ref2.matches;
 
 			if (matches) {
