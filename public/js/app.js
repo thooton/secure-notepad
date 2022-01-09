@@ -253,12 +253,12 @@
 	});
 
 	getId('login').addEventListener('submit', function (e) {
+		e.preventDefault(); e.stopPropagation();  e.stopImmediatePropagation();
 		function handle(e) {
 			getId('error').textContent = e;
 			setLoginButtons(true);
 			console.log(e);
 		}
-		e.preventDefault();
 		setLoginButtons(false);
 		var formData = new FormData(e.target);
 		var json = {
