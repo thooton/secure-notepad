@@ -12,7 +12,7 @@
 	var notes = null;
 	var currentId = null;
 
-	if (localStorage.getItem('mode') && localStorage.getItem('mode') !== '') {
+	if (localStorage && localStorage.getItem('mode') && localStorage.getItem('mode') !== '') {
 		if (localStorage.getItem('mode') === 'dark') {
 			enableDarkMode(darkMetaColor, metaThemeColor);
 		} else {
@@ -35,7 +35,7 @@
 
 	// This changes the application's theme when 
 	// user toggles device's theme preference
-	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({
+	if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({
 		matches
 	}) => {
 		// To override device's theme preference
@@ -53,7 +53,7 @@
 
 	// This sets the application's theme based on
 	// the device's theme preference when it loads
-	if (localStorage.getItem('isUserPreferredTheme') === 'false') {
+	if (localStorage && localStorage.getItem('isUserPreferredTheme') === 'false') {
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			enableDarkMode(darkMetaColor, metaThemeColor);
 		} else {
@@ -61,7 +61,7 @@
 		}
 	}
 
-	window.matchMedia('(display-mode: standalone)').addEventListener('change', ({
+	if (window.matchMedia) window.matchMedia('(display-mode: standalone)').addEventListener('change', ({
 		matches
 	}) => {
 		if (matches) {
@@ -70,14 +70,6 @@
 			getId('installApp').show();
 		}
 	});
-
-	document.onkeydown = function (event) {
-		event = event || window.event;
-		if (event.ctrlKey && event.code === 'KeyS') {
-			saveTextAsFile(note.value, getFileName());
-			event.preventDefault();
-		}
-	};
 
 	getId('pswfield').addEventListener('change', function () {
 		loginInputChange();
