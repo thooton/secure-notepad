@@ -14,6 +14,7 @@
 	var hybrid_inst = null;
 	var notes = null;
 	var currentId = null;
+	var saving = true;
 
 	if (localStorage && localStorage.getItem('mode') && localStorage.getItem('mode') !== '') {
 		if (localStorage.getItem('mode') === 'dark') {
@@ -194,11 +195,8 @@
 		currentId = null;
 	});
 	getId('saveButton').addEventListener('click', function () {
-		var self = this;
-		self.style.visibility = 'hidden';
-		saveNote(currentId, function () {
-			self.style.visibility = 'visible';
-		});
+		this.style.visibility = 'hidden';
+		saveNote(currentId);
 	});
 	getId('clearNotes').addEventListener('click', function () {
 		confirmAlert('!! Caution !!\nIrrevocably delete note?', function () {
@@ -210,6 +208,8 @@
 	});
 
 	function saveNote(id, callback) {
+		if (saving) return;
+		saving = true;
 		try {
 			if (id) notes[id].note = getId('note').value;
 			var json = {
@@ -220,7 +220,8 @@
 			var encrypted = hybrid_inst.encrypt(json, Hybrid.NO_PUBLIC_KEY);
 			postRequest('/save', encrypted, function (data) {
 				if (callback) callback();
-
+				saving = false;
+				getId('save').style.visibility = true;
 				try {
 					var res = JSON.parse(data);
 
