@@ -253,7 +253,9 @@
 	});
 
 	getId('login').addEventListener('submit', function (e) {
-		e.preventDefault(); e.stopPropagation();  e.stopImmediatePropagation();
+		if (e.preventDefault) e.preventDefault();
+		if (e.stopPropagation) e.stopPropagation();
+		if (e.stopImmediatePropagation) e.stopImmediatePropagation();
 		function handle(e) {
 			getId('error').textContent = e;
 			setLoginButtons(true);
