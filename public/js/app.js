@@ -14,7 +14,7 @@
 	var hybrid_inst = null;
 	var notes = null;
 	var currentId = null;
-	var saving = true;
+	var saving = false;
 
 	if (localStorage && localStorage.getItem('mode') && localStorage.getItem('mode') !== '') {
 		if (localStorage.getItem('mode') === 'dark') {
