@@ -1,6 +1,6 @@
 secure-notepad
 ===
-This is an open-source self-hosted notepad application that focuses on security. It allows notes to be written by accessing a webpage, and stored encrypted on the server.
+This is a self-hosted notepad application that focuses on security. It allows notes to be written by accessing a webpage, and stored encrypted on the server.
 
 It is forked from AmitMerchant's [offline-capable minimalist notepad](https://github.com/amitmerchant1990/notepad).
 
