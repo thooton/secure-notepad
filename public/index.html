@@ -35,13 +35,13 @@
 						<img src="img/navbar/save.svg" alt="Save Icon" />
 					</a>
 				</span>
-				
+
 				<span>
 					<a id="clearNotes" class="navbar-brand trash-icon hidden" title="Clear Note">
 						<img src="img/navbar/delete.svg" alt="Clear Icon" />
 					</a>
 				</span>
-				
+
 				<span>
 					<a id="mode" class="navbar-brand">
 						<img src="img/navbar/light-theme.svg" title="Enable light mode" alt="Light theme Icon"
@@ -57,13 +57,13 @@
 		<div class="starter-template">
 			<table id="list" class="hidden"></table>
 			<form id="login" onsubmit="return false;">
-				<p><label for="uname">Username</label></p>
-				<p><input type="text" name="uname" required="true"></p>
+				<p><label for="unamefield">Username</label></p>
+				<p><input type="text" name="uname" id="unamefield" required="true"></p>
 
-				<p><label for="psw">Password</label></p>
+				<p><label for="pswfield">Password</label></p>
 				<p><input type="password" name="psw" id="pswfield" required="true"></p>
 
-				<p><label for="cnf">Confirm pwd (reg. only)</label></p>
+				<p><label for="cnffield">Confirm pwd (reg. only)</label></p>
 				<p><input type="password" name="cnf" id="cnffield"></p>
 
 				<p><button type="submit" id="lg_btn">Login</button> <button type="submit" id="rg_btn">Register</button>
@@ -75,15 +75,10 @@
 	</div>
 
 	<link href="css/alerty.css" rel="stylesheet">
-	<script src="js/alerty.min.js" type="text/javascript"></script>
-	<script src="js/jsencrypt.min.js" type="text/javascript"></script>
-	<script src="js/aes-js.min.js" type="text/javascript"></script>
-	<script src="js/text-endec.min.js" nomodule="" type="text/javascript"></script>
-	<script src="js/formdata.min.js" nomodule="" type="text/javascript"></script>
-	<script src="js/base64.min.js" type="text/javascript"></script>
-	<script src="js/utils.js" type="text/javascript"></script>
-	<script src="js/hybrid.js" type="text/javascript"></script>
-	<script src="js/app.js" type="text/javascript"></script>
+
+	<script src="js/poly/text-endec.min.js" nomodule="" type="text/javascript"></script>
+	<script src="js/poly/formdata.min.js" nomodule="" type="text/javascript"></script>
+	<script src="js/bundle.js" type="text/javascript"></script>
 </body>
 
 </html>

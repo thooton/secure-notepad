@@ -9,7 +9,7 @@ import url from 'url';
 import rateLimit from 'express-rate-limit';
 import * as AES from './aes.js';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-export const config = JSON.parse(fs.readFileSync('./config.json').toString());
+export const config = JSON.parse(fs.readFileSync('../config.json').toString());
 if (JSON.stringify(config).includes('unset')) {
     console.error('Settings must be configured in config.json.');
     process.exit();
@@ -17,7 +17,7 @@ if (JSON.stringify(config).includes('unset')) {
 argon2.init(config.argon2_options);
 const hybrid_inst = new Hybrid();
 const db = await Database({
-    file: './data/main.db',
+    file: '../data/main.db',
     name: 'main',
     schema: [
         'username TEXT NOT NULL PRIMARY KEY',
@@ -44,11 +44,11 @@ if (config.require_secret_word) {
             next();
         }
         else {
-            res.sendFile(path.join(__dirname, '..', 'public', 'password.html'));
+            res.sendFile(path.join('..', 'public', 'password.html'));
         }
     });
 }
-app.use(express.static('public'));
+app.use(express.static('../public'));
 app.get('/getkey', function (req, res) {
     res.json({
         'key': hybrid_inst.public_key

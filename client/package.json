@@ -1,0 +1,22 @@
+{
+	"name": "secure-notepad-client",
+	"version": "1.0.0",
+	"scripts": {
+		"build": "webpack",
+		"rebuild": "npm run clean && npm run build",
+		"clean": "rimraf ../public/js/bundle.js"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "^7.16.7",
+		"babel-core": "^6.26.3",
+		"babel-loader": "^8.2.3",
+		"exports-loader": "^3.1.0",
+		"rimraf": "^3.0.2",
+		"ts-loader": "^9.2.6",
+		"typescript": "^4.5.4",
+		"webpack-cli": "^4.9.1"
+	},
+	"dependencies": {
+		"byte-base64": "^1.1.0"
+	}
+}

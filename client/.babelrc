@@ -1,0 +1,11 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": "cover 100%",
+        "useBuiltIns": "usage"
+      }
+    ]
+  ]
+}

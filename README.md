@@ -4,6 +4,14 @@ This is an open-source self-hosted notepad application that focuses on security.
 
 It is forked from AmitMerchant's [offline-capable minimalist notepad](https://github.com/amitmerchant1990/notepad).
 
+## Features
+
+- Relatively lightweight frontend (340KB)
+
+- Minimalistic
+
+- Configurable level of security
+
 ## Screenshots
 
 ![Login](ss2.png?raw=true)
@@ -18,13 +26,11 @@ Has not been tested on any version of Node other than v16.4.2.
 
 `git clone https://github.com/thooton/secure-notepad`
 
-`cd secure-notepad`
+`cd secure-notepad/server`
 
 `npm install`
 
-`mkdir data`
-
-The settings for the Argon2id hashing function, as set in config.json, must be determined based on individual hardware requirements. 
+The settings for the Argon2id hashing function, as set in /config.json, must be determined based on individual hardware requirements. 
 
 A helper program, `argon2id_calibration.js`, can be run with `node` to recommend the settings for Argon2id. It loosely follows the guidelines in the [argon2 specifications](https://www.password-hashing.net/argon2-specs.pdf) under 'Recommended parameters':
 - It asks the user for the number of CPU cores, amount of memory, and time that they wish to dedicate to each Argon2id call.
@@ -33,7 +39,7 @@ A helper program, `argon2id_calibration.js`, can be run with `node` to recommend
 
 Note that although the Argon2id hashing function settings can be changed in future, the server cannot update passwords with the new settings at will. Instead, the server must wait until a user signs into their account. After verifying the hash with the previous settings (necessitating the same amount of computational work that was used to create it), the server will re-hash the password with the new settings.
 
-After argon2 configuration, you can `node dist/index.js` to start (and add that to your systemd config, etc.)
+After argon2 configuration is finished, you can `cd server` and `node dist/index.js` and start (and add this to your systemd config, etc. as well, although keep in mind that the working directory must be the `server` subfolder.)
 
 ## Security details
 
@@ -46,6 +52,24 @@ For RSA, on the client side, [jsencrypt](https://github.com/travist/jsencrypt) i
 For AES, [aes-js](https://github.com/ricmoo/aes-js) is used on both the client and server side. The mode of operation is CTR. 256-bit keys are used, specific to each request, and on the client side are generated using the jsencrypt RNG.
 
 As an aside, although the client stores the user password as a Javascript variable, it is stored in its encrypted form, and so if extracted cannot be used to gain access to other applications or websites.
+
+## Development
+
+/client houses the files for the frontend JavaScript, exported to /public/js/bundle.js.
+
+- `cd client`
+
+- `npm install -D`
+
+- Now you can run `npm run build` in order to create the bundle.
+
+/server holds the files for the web server itself.
+
+- `cd server`
+
+- `npm install -D`
+
+- To build run `npm run build`; for a rebuild every time a file is updated run `npm run dev`.
 
 ## License
 

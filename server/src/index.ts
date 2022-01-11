@@ -8,7 +8,6 @@ import path from 'path';
 import url from 'url';
 import rateLimit from 'express-rate-limit';
 import * as AES from './aes.js';
-import expressStaticGzip from 'express-static-gzip';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -23,7 +22,7 @@ export const config: {
         windowMs: number,
         maxRequests: number
     }
-} = JSON.parse(fs.readFileSync('./config.json').toString());
+} = JSON.parse(fs.readFileSync('../config.json').toString());
 if (JSON.stringify(config).includes('unset')) {
     console.error('Settings must be configured in config.json.');
     process.exit();
@@ -33,7 +32,7 @@ argon2.init(config.argon2_options);
 const hybrid_inst = new Hybrid();
 
 const db = await Database({
-    file: './data/main.db',
+    file: '../data/main.db',
     name: 'main',
     schema: [
         'username TEXT NOT NULL PRIMARY KEY',
@@ -63,12 +62,12 @@ if (config.require_secret_word) {
         if (req.cookies.secret_word == config.secret_word || req.path.trim() == '/manifest.json') {
             next();
         } else {
-            res.sendFile(path.join(__dirname, '..', 'public', 'password.html'));
+            res.sendFile(path.join('..', 'public', 'password.html'));
         }
     });
 }
 
-app.use(express.static('public'));
+app.use(express.static('../public'));
 
 app.get('/getkey', function (req, res) {
     res.json({

@@ -1,6 +1,8 @@
-"use strict";
+import { base64ToBytes, bytesToBase64 } from 'byte-base64';
+import * as JSEncrypt from './lib/jsencrypt.min.js';
+import * as aesjs from './lib/aes-js.min.js';
 
-function Hybrid(rsa_public) {
+export default function Hybrid(rsa_public) {
     if (!rsa_public) {
         throw new Error('Missing RSA public key');
     }
@@ -16,7 +18,7 @@ function Hybrid(rsa_public) {
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
-    if (_typeof(data) === 'object') {
+    if (typeof data === 'object') {
         text = JSON.stringify(data);
     } else {
         text = data;
@@ -32,10 +34,13 @@ Hybrid.prototype.encrypt = function(data, no_public) {
     var aes_b64 = bytesToBase64(aes_key);
     var aes_fin = this.enc_inst.encrypt(aes_b64);
 
-    var json = {
+    var json: {
+        key: string,
+        data: string,
+        public_key?: string
+    } = {
         'key': aes_fin,
         'data': encryptedb64
-
     }
     if (!no_public) {
         json.public_key = this.public_key;
