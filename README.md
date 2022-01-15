@@ -33,6 +33,24 @@ Note that although the Argon2id hashing function settings can be changed in futu
 
 After argon2 configuration is finished, you can `cd server` and `node dist/index.js` and start (and add this to your systemd config, etc. as well, although keep in mind that the working directory must be the `server` subfolder.)
 
+Here is a sample systemd configuration:
+```
+[Unit]
+Description=secure-notepad
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=10 #wait 10sec before restart
+User=root
+Group=root
+WorkingDirectory=/root/secure-notepad/server
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Security details
 
 When the user sends their notes to the server for storage, they also send their password. The server hashes the password with Argon2id (via [node-argon2](https://github.com/ranisalt/node-argon2)), and utilizes it as an AES-256 encryption key for the user's notepad data, which is stored in its database.
