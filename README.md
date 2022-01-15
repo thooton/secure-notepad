@@ -4,14 +4,6 @@ This is a self-hosted notepad application that focuses on security. It allows no
 
 It is forked from AmitMerchant's [offline-capable minimalist notepad](https://github.com/amitmerchant1990/notepad).
 
-## Features
-
-- Relatively lightweight frontend (340KB)
-
-- Minimalistic
-
-- Configurable level of security
-
 ## Screenshots
 
 ![Login](ss2.png?raw=true)

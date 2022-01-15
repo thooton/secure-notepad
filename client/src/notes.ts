@@ -3,6 +3,7 @@ import { setScreen } from "./screen";
 import { hybrid_inst } from "./index";
 import { user_name, user_password } from "./auth";
 import Hybrid from "./hybrid";
+import * as $ from 'jquery';
 var voidurl = 'javascript:void(0);';
 import { confirmAlert, currentDateString, getId, infoAlert, parseFormatDate, postRequest, promptAlert, randomString } from "./utils";
 
@@ -22,27 +23,31 @@ export function updateNotes() {
         var id = ids[i];
         var note = notes[id];
         var tr = table.insertRow(-1);
-        var name = document.createElement('a');
-        name.href = voidurl;
-        name.textContent = note.name;
-        name.addEventListener('click', function (noteId) {
+        var name = $('<a>', {
+            href: voidurl
+        })
+        .text(note.name)
+        .on('click', function (noteId) {
             return function () {
                 enterNote(noteId);
             };
-        }(id));
+        }(id)).get(0);
         tr.insertCell(-1).appendChild(name);
+
         var date = tr.insertCell(-1);
         date.textContent = parseFormatDate(note.date);
-        var rename = document.createElement('a');
-        rename.href = voidurl;
-        rename.textContent = 'Ren';
-        rename.addEventListener('click', function (noteId, nameElement) {
+
+        var rename = $('<a>', {
+            href: voidurl
+        })
+        .text('Ren')
+        .on('click', function (noteId, nameElement) {
             return function () {
                 renameDialog(noteId, function (newName) {
                     nameElement.textContent = newName;
                 });
             };
-        }(id, name));
+        }(id, name)).get(0);
         tr.insertCell(-1).appendChild(rename);
     }
 }
@@ -60,16 +65,16 @@ function renameDialog(id: string, callback: Function) {
     });
 }
 
-getId('backButton').addEventListener('click', function () {
+$('#backButton').on('click', function () {
     setScreen('list');
     saveNote(currentId);
     currentId = null;
 });
-getId('saveButton').addEventListener('click', function () {
+$('#saveButton').on('click', function () {
     this.style.visibility = 'hidden';
     saveNote(currentId);
 });
-getId('clearNotes').addEventListener('click', function () {
+$('#clearNotes').on('click', function () {
     confirmAlert('!! Caution !!\nIrrevocably delete note?', function () {
         delete notes[currentId];
         updateNotes();
@@ -110,7 +115,7 @@ function saveNote(id?: string, callback?: Function) {
     }
 }
 
-getId('newNote').addEventListener('click', function () {
+$('#newNote').on('click', function () {
     promptAlert('Enter note name', function (name) {
         name = name.trim();
         if (!name) return;

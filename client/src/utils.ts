@@ -87,14 +87,23 @@ export function randomString(length) {
 }
 
 export function getPWADisplayMode() {
-    var isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    var isStandalone = window.matchMedia?.('(display-mode: standalone)').matches;
 
-    if (document.referrer.startsWith('android-app://')) {
+    if (document.referrer?.startsWith('android-app://')) {
         return 'twa';
-    // @ts-ignore
-    } else if (navigator.standalone || isStandalone) {
+    } else if (navigator["standalone"] || isStandalone) {
         return 'standalone';
     }
 
     return 'browser';
 }
+
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function(search, this_len) {
+      if (this_len === undefined || this_len > this.length) {
+        this_len = this.length;
+      }
+      return this.substring(this_len - search.length, this_len) === search;
+    };
+  }
+  

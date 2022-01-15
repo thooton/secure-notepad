@@ -1,4 +1,5 @@
 import { getId, setHidden } from "./utils";
+import * as $ from 'jquery';
 
 var darkMetaColor = '#0d1117';
 var lightMetaColor = '#747474';
@@ -12,7 +13,7 @@ if (localStorage?.getItem('mode') && localStorage.getItem('mode') !== '') {
     }
 }
 
-getId('mode').addEventListener('click', function () {
+$('#mode').on('click', function () {
     document.body.classList.toggle('dark');
     var bodyClass = document.body.getAttribute('class');
 
@@ -27,7 +28,7 @@ getId('mode').addEventListener('click', function () {
 
 // This changes the application's theme when 
 // user toggles device's theme preference
-window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', function (_ref) {
+window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change', function (_ref) {
     var matches = _ref.matches;
 
     // To override device's theme preference
@@ -53,7 +54,7 @@ if (localStorage?.getItem('isUserPreferredTheme') === 'false') {
     }
 }
 
-window.matchMedia?.('(display-mode: standalone)').addEventListener('change', function (_ref2) {
+window.matchMedia?.('(display-mode: standalone)').addEventListener?.('change', function (_ref2) {
     var matches = _ref2.matches;
 
     if (matches) {
@@ -64,19 +65,19 @@ window.matchMedia?.('(display-mode: standalone)').addEventListener('change', fun
 });
 
 function enableDarkMode(darkMetaColor, metaThemeColor) {
-    document.body.classList.add('dark');
-    document.querySelector('.navbar').classList.remove('navbar-default');
-    document.getElementById('light').classList.remove('hidden');
-    document.getElementById('dark').classList.add('hidden');
+    $(document.body).addClass('dark');
+    $('.navbar').removeClass('navbar-default');
+    $('#light').show();
+    $('#dark').hide();
     metaThemeColor.setAttribute('content', darkMetaColor);
-    localStorage.setItem('mode', 'dark');
+    localStorage?.setItem('mode', 'dark');
 }
 
 function enableLightMode(lightMetaColor, metaThemeColor) {
-    document.body.classList.remove('dark');
-    document.querySelector('.navbar').classList.add('navbar-default');
-    document.getElementById('light').classList.add('hidden');
-    document.getElementById('dark').classList.remove('hidden');
+    $(document.body).removeClass('dark');
+    $('.navbar').addClass('navbar-default');
+    $('#light').hide();
+    $('#dark').show();
     metaThemeColor.setAttribute('content', lightMetaColor);
-    localStorage.setItem('mode', 'light');
+    localStorage?.setItem('mode', 'light');
 }
