@@ -4,8 +4,10 @@
       "@babel/preset-env",
       {
         "targets": "cover 100%",
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
     ]
-  ]
+  ],
+  "plugins": ["@babel/plugin-transform-reserved-words"]
 }

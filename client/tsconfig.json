@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"module": "es6",
-		"target": "es5",
+		"target": "ES3",
 		"allowJs": true,
 		"sourceMap": false,
 		"moduleResolution": "Node"

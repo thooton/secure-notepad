@@ -15,19 +15,18 @@ var config = {
 	module: {
 		rules: [
 			{
-				test: /\.ts$/, 
+				test: /\.ts$/,
 				use: [
-					'babel-loader', 
+					'babel-loader',
 					'ts-loader'
-				], 
-				exclude: /node_modules/
+				]
 			}
 		]
 	}
 };
 
 var webLibraries = {
-	
+
 };
 
 for (var toExport in webLibraries) {
