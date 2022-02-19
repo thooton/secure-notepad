@@ -81,6 +81,9 @@ As an aside, although the client stores the user password as a Javascript variab
 
 - To build run `npm run build`; for a rebuild every time a file is updated run `npm run dev`.
 
+## Notes
+If you are getting inexplicable errors while logging in or registering, without any messages in the console, you may have assigned more memory to the Argon2 hashing function than it can allocate.
+
 ## License
 
 amitmerchant's work is licensed under MIT; any modifications made in this repository are licensed under CC BY-NC.
