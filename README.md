@@ -57,7 +57,7 @@ When the user sends their notes to the server for storage, they also send their 
 
 In addition, the client and the server will, when sending sensitive data, communicate using a hybrid RSA and AES encryption system (as described in [this StackOverflow answer](https://stackoverflow.com/a/5868456/6917530)) in order to minimize the risk of sensitive data being stored in plain text e.g. in web server logs, and to provide a rudimentary protection against request logging by malicious extensions.
 
-For RSA, on the client side, [jsencrypt](https://github.com/travist/jsencrypt) is used, although with [a couple compatibility modifications](https://github.com/thooton/jsencrypt/commits/new_changes), while [node-rsa](https://github.com/rzcoder/node-rsa) is used server-side. The security of jsencrypt's RNG is described in [this pull request](https://github.com/travist/jsencrypt/pull/6). The encryption scheme used is PKCS1.
+For RSA, on the client side, [jsencrypt](https://github.com/travist/jsencrypt) is used, while [node-rsa](https://github.com/rzcoder/node-rsa) is used server-side. The security of jsencrypt's RNG is described in [this pull request](https://github.com/travist/jsencrypt/pull/6). The encryption scheme used is PKCS1.
 
 For AES, [aes-js](https://github.com/ricmoo/aes-js) is used on both the client and server side. The mode of operation is CTR. 256-bit keys are used, specific to each request, and on the client side are generated using the jsencrypt RNG.
 
