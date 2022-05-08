@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 var config = {
 	mode: 'production',
@@ -9,6 +10,7 @@ var config = {
 		filename: 'bundle.js',
 	},
 	resolve: {
+		fallback: {"constants": false, "assert": false, "crypto": false, "buffer": false},
 		extensions: ['.js', '.ts'],
 		modules: [path.resolve(__dirname, 'src', 'lib'), path.resolve(__dirname, 'node_modules')]
 	},
@@ -22,7 +24,7 @@ var config = {
 				]
 			}
 		]
-	}
+	},
 };
 
 exports.default = config;
