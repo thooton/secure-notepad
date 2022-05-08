@@ -9,7 +9,7 @@ export default function Hybrid(rsa_public) {
 Hybrid.prototype.init = function(callback) {
     var self = this;
     forge.pki.rsa.generateKeyPair({
-        bits: 4096,
+        bits: 2048,
         workers: 2
     }, function(err, keyPair) {
         if (err) throw new Error("Error generating key pair " + err);
