@@ -1,11 +1,4 @@
 /*!
- * RSA library for Node.js
- *
- * Author: rzcoder
- * License MIT
- */
-
-/*!
  * Sizzle CSS Selector Engine v2.3.6
  * https://sizzlejs.com/
  *
