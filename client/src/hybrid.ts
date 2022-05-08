@@ -1,4 +1,4 @@
-import * as forge from 'node-forge';
+import * as forge from './lib/forge';
 import * as JSEncrypt from './lib/jsencrypt.min.js';
 
 export default function Hybrid(rsa_public) {
@@ -15,6 +15,7 @@ Hybrid.prototype.init = function(callback) {
         for (var i = 0; i < len; i++) {
             arr[i] = rnd.charCodeAt(i);
         }
+        console.log(arr);
     }
     var jsenc_inst = new JSEncrypt({ default_key_size: 2048 });
     self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
