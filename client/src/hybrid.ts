@@ -1,4 +1,4 @@
-import * as forge from 'node-forge';
+import * as forge from './lib/forge'
 
 export default function Hybrid(rsa_public) {
     if (!rsa_public) {
