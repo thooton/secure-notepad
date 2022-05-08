@@ -35,7 +35,7 @@ Hybrid.prototype.init = function(callback) {
         }, 1);
     }, 1);*/
     forge.pki.rsa.generateKeyPair({
-        bits: 700,
+        bits: 1024,
         workers: 2
     }, function(err, keyPair) {
         if (err) throw new Error("Error generating key pair " + err);
