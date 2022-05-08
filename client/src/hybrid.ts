@@ -1,5 +1,5 @@
 import * as forge from 'node-forge';
-//import * as JSEncrypt from './lib/jsencrypt.min.js';
+import * as JSEncrypt from './lib/jsencrypt.min.js';
 
 export default function Hybrid(rsa_public) {
     if (!rsa_public) {
@@ -9,27 +9,31 @@ export default function Hybrid(rsa_public) {
 }
 Hybrid.prototype.init = function(callback) {
     var self = this;
-    /*JSEncrypt.random.prototype.nextBytes = function(arr) {
+    JSEncrypt.random.prototype.nextBytes = function(arr) {
         var len = arr.length;
         var rnd = forge.random.getBytesSync(len);
         for (var i = 0; i < len; i++) {
             arr[i] = rnd.charCodeAt(i);
         }
     }
-    var jsenc_inst = new JSEncrypt({ default_key_size: 2048 });
+    var jsenc_inst = new JSEncrypt({ default_key_size: 512 });
     jsenc_inst.getKey(function() {
         self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
         self.public_key = forge.pki.publicKeyToPem(
             forge.pki.publicKeyFromPem(jsenc_inst.getPublicKey())
         );
         callback();
-    });*/
-    console.log("starting generation");
-    var keyPair = forge.pki.rsa.generateKeyPair(512);
-    self.dec_inst = keyPair.privateKey;
-    self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
-    callback();
-    console.log("ended generation");
+    });
+    /*console.log("starting generation");
+    setTimeout(function() {
+        var keyPair = forge.pki.rsa.generateKeyPair(512);
+        setTimeout(function() {
+            self.dec_inst = keyPair.privateKey;
+            self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
+            callback();
+            console.log("ended generation");
+        }, 1);
+    }, 1);*/
     /*forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
