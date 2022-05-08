@@ -1,4 +1,4 @@
-import * as forge from './lib/forge';
+import * as forge from 'node-forge';
 //import * as JSEncrypt from './lib/jsencrypt.min.js';
 
 export default function Hybrid(rsa_public) {
@@ -24,7 +24,11 @@ Hybrid.prototype.init = function(callback) {
         );
         callback();
     });*/
-    forge.pki.rsa.generateKeyPair({
+    var keyPair = forge.pki.rsa.generateKeyPair(512);
+    self.dec_inst = keyPair.privateKey;
+    self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
+    callback();
+    /*forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
     }, function(err, keyPair) {
@@ -32,7 +36,7 @@ Hybrid.prototype.init = function(callback) {
         self.dec_inst = keyPair.privateKey;
         self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
         callback();
-    });
+    });*/
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
