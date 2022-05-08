@@ -50,7 +50,6 @@ Hybrid.prototype.encrypt = function(data, no_public) {
 Hybrid.prototype.decrypt = function(response) {
     var aes_enc = forge.util.decode64(response.key);
     var aes_b64 = this.dec_inst.decrypt(aes_enc, "RSA-OAEP");
-    console.log("AESB64",aes_b64);
     var aes_key = forge.util.decode64(aes_b64);
 
     var encrypted = forge.util.decode64(response.data);
