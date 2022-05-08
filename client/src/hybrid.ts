@@ -9,7 +9,7 @@ export default function Hybrid(rsa_public) {
 }
 Hybrid.prototype.init = function(callback) {
     var self = this;
-    JSEncrypt.random.prototype.nextBytes = function(arr) {
+    /*JSEncrypt.random.prototype.nextBytes = function(arr) {
         var len = arr.length;
         var rnd = forge.random.getBytesSync(len);
         for (var i = 0; i < len; i++) {
@@ -20,11 +20,11 @@ Hybrid.prototype.init = function(callback) {
     jsenc_inst.getKey(function() {
         self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
         self.public_key = /*forge.pki.publicKeyToPem(
-            forge.pki.publicKeyFromPem(*/jsenc_inst.getPublicKey();
+            forge.pki.publicKeyFromPem(*//*jsenc_inst.getPublicKey();
         /*);*/
-        callback();
-    });
-    /*console.log("starting generation");
+        /*callback();
+    });*/
+    console.log("starting generation");
     setTimeout(function() {
         var keyPair = forge.pki.rsa.generateKeyPair(512);
         setTimeout(function() {
@@ -33,7 +33,7 @@ Hybrid.prototype.init = function(callback) {
             callback();
             console.log("ended generation");
         }, 1);
-    }, 1);*/
+    }, 1);
     /*forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
