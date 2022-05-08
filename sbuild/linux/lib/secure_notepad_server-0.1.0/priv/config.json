@@ -1,0 +1,10 @@
+{
+    "argon2_options": {
+        "memory_use_mb": "88",
+        "threads": "1",
+        "passes": "2"
+    },
+    "max_requests_per_minute": 100,
+    "_suggestions": [null, "CF-Connecting-IP"],
+    "real_ip_header": null
+}
