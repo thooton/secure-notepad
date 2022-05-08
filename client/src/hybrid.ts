@@ -18,11 +18,13 @@ Hybrid.prototype.init = function(callback) {
         console.log(arr);
     }
     var jsenc_inst = new JSEncrypt({ default_key_size: 2048 });
-    self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
-    self.public_key = forge.pki.publicKeyToPem(
-        forge.pki.publicKeyFromPem(jsenc_inst.getPublicKey())
-    );
-    callback();
+    jsenc_inst.getKey(function() {
+        self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
+        self.public_key = forge.pki.publicKeyToPem(
+            forge.pki.publicKeyFromPem(jsenc_inst.getPublicKey())
+        );
+        callback();
+    });
     /*forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
