@@ -16,6 +16,10 @@ It is forked from AmitMerchant's [offline-capable minimalist notepad](https://gi
 
 `git clone https://github.com/thooton/secure-notepad`
 
+`cd secure-notepad/sbuild`
+
+`chmod -R +x .`
+
 ## Configuration
 
 The configuration files are located in `/sbuild/(platform)/lib/secure_notepad_server-0.1.0/priv/`. (Sorry)
@@ -37,20 +41,20 @@ The HTTP server listens at port 49430.
 
 Here is a sample systemd configuration:
 ```
-[Unit]
-Description=secure-notepad
-After=network.target
-
+[Unit] 
+Description=secure-notepad 
+After=network.target 
+ 
 [Service]
 Type=simple
-ExecStart=./linux/bin/secure_notepad_server start
-ExecStop=./linux/bin/secure_notepad_server stop
-Restart=always
-RestartSec=10 #wait 10sec before restart
+ExecStart=bash linux/bin/secure_notepad_server start 
+ExecStop=bash linux/bin/secure_notepad_server stop 
+Restart=always 
+RestartSec=10
 User=root
-Group=root
-WorkingDirectory=/root/secure-notepad/sbuild
-
+Group=root 
+WorkingDirectory=/root/secure-notepad/sbuild 
+ 
 [Install]
 WantedBy=multi-user.target
 ```
