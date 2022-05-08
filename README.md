@@ -63,7 +63,7 @@ WantedBy=multi-user.target
 
 When the user sends their notes to the server for storage, they also send their password. The server hashes the password with Argon2id (via [node-argon2](https://github.com/ranisalt/node-argon2)), and utilizes it as an AES-256 encryption key for the user's notepad data, which is stored in its database.
 
-In addition, the client and the server will, when sending sensitive data, communicate using a hybrid RSA and AES encryption system (as described in [this StackOverflow answer](https://stackoverflow.com/a/5868456/6917530)) in order to minimize the risk of sensitive data being stored in plain text e.g. in web server logs, and to provide a rudimentary protection against request logging by malicious extensions.
+In addition, if the option 'Enhanced security' is selected on the login page, the client and the server will, when sending sensitive data, communicate using a hybrid RSA and AES encryption system (as described in [this StackOverflow answer](https://stackoverflow.com/a/5868456/6917530)) in order to minimize the risk of sensitive data being stored in plain text e.g. in web server logs, and to provide a rudimentary protection against request logging by malicious extensions.
 
 For RSA and AES, on the client-side, [forge](https://github.com/digitalbazaar/forge) is used, while on the server-side, [apoc](https://github.com/coderdan/apoc) is used. RSA keys are 2048-bit, AES is AES-GCM.
 

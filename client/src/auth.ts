@@ -76,7 +76,7 @@ $('#login').on('submit', function (e) {
             var theHybrid = new Hybrid(JSON.parse(key)["key"]);
             setHybrid(theHybrid);
             var finalResponse;
-            theHybrid.init(() => {
+            theHybrid.init((<HTMLInputElement> document.getElementById("enhanced_security")).checked, () => {
                 try {
                     user_name = json.username.toString();
                     user_password = hybrid_inst.encrypt(json.password, Hybrid.NO_PUBLIC_KEY);
