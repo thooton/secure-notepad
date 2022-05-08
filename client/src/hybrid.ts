@@ -10,7 +10,7 @@ Hybrid.prototype.init = function(callback) {
     var self = this;
     forge.pki.rsa.generateKeyPair({
         bits: 4096,
-        workers: -1
+        workers: 2
     }, function(err, keyPair) {
         if (err) throw new Error("Error generating key pair " + err);
         self.dec_inst = keyPair.privateKey;
