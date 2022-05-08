@@ -33,6 +33,8 @@ A helper program, `/argon2id_calibration` can be used to recommend the settings 
 
 When running the server, the working directory must be `/sbuild`. Run `./(platform)/bin/secure_notepad_server(.bat) start` to start. Run `./(platform)/bin/secure_notepad_server(.bat) stop` to stop.
 
+The HTTP server listens at port 49430.
+
 Here is a sample systemd configuration:
 ```
 [Unit]
