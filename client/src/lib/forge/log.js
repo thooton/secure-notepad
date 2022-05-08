@@ -285,35 +285,5 @@ if(typeof(console) !== 'undefined' && 'log' in console) {
   };
 }
 
-/*
- * Check for logging control query vars in current URL.
- *
- * console.level=<level-name>
- * Set's the console log level by name.  Useful to override defaults and
- * allow more verbose logging before a user config is loaded.
- *
- * console.lock=<true|false>
- * Lock the console log level at whatever level it is set at.  This is run
- * after console.level is processed.  Useful to force a level of verbosity
- * that could otherwise be limited by a user config.
- */
-if(sConsoleLogger !== null &&
-  typeof window !== 'undefined' && window.location
-) {
-  var query = new URL(window.location.href).searchParams;
-  if(query.has('console.level')) {
-    // set with last value
-    forge.log.setLevel(
-      sConsoleLogger, query.get('console.level').slice(-1)[0]);
-  }
-  if(query.has('console.lock')) {
-    // set with last value
-    var lock = query.get('console.lock').slice(-1)[0];
-    if(lock == 'true') {
-      forge.log.lock(sConsoleLogger);
-    }
-  }
-}
-
 // provide public access to console logger
 forge.log.consoleLogger = sConsoleLogger;
