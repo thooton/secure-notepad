@@ -6,7 +6,7 @@ defmodule SecureNotepadServer.Endpoint do
   use Plug.Router
 
   plug RemoteIp,
-    proxies: {SecureNotepadServer.Options, :remoteip_proxies, []}
+    proxies: {SecureNotepadServer.Options, :remoteip_headers, []}
 
   plug Replug,
     plug: Hammer.Plug,

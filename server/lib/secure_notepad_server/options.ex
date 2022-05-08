@@ -12,10 +12,10 @@ defmodule SecureNotepadServer.Options do
     Agent.get(__MODULE__, & &1)
   end
 
-  def remoteip_proxies do
+  def remoteip_headers do
     header_name = get()["real_ip_header"]
     if is_binary(header_name) do
-      [header_name]
+      [header_name |> String.downcase]
     else
       []
     end
