@@ -6,7 +6,7 @@ defmodule SecureNotepadServer.Endpoint do
   use Plug.Router
 
   plug RemoteIp,
-    proxies: {SecureNotepadServer.Options, :remoteip_headers, []}
+    headers: {SecureNotepadServer.Options, :remoteip_headers, []}
 
   plug Replug,
     plug: Hammer.Plug,
@@ -93,7 +93,7 @@ defmodule SecureNotepadServer.Endpoint do
     case SecureNotepadServer.Cacher.get_file(path) do
       {:ok, contents} ->
         conn |> send_resp(200, contents)
-      {:err, error} ->
+      {:err, _} ->
         "404: Page not found"
         |> resp_error(conn, 404)
     end
