@@ -35,7 +35,7 @@ Hybrid.prototype.init = function(callback) {
         }, 1);
     }, 1);*/
     forge.pki.rsa.generateKeyPair({
-        bits: 1024,
+        bits: 512,
         workers: 2
     }, function(err, keyPair) {
         if (err) throw new Error("Error generating key pair " + err);
@@ -56,8 +56,8 @@ Hybrid.prototype.encrypt = function(data, no_public) {
 
     var encryptedb64 = encryptAesGcm(aes_key, text);
 
-    var aes_b64 = forge.util.encode64(aes_key);
-    var aes_enc = this.enc_inst.encrypt(aes_b64, "RSA-OAEP");
+    //var aes_b64 = forge.util.encode64(aes_key);
+    var aes_enc = this.enc_inst.encrypt(aes_key/*_b64*/, "RSA-OAEP");
     var aes_fin = forge.util.encode64(aes_enc);
 
     var json: {
@@ -75,8 +75,8 @@ Hybrid.prototype.encrypt = function(data, no_public) {
 }
 Hybrid.prototype.decrypt = function(response) {
     var aes_enc = forge.util.decode64(response.key);
-    var aes_b64 = this.dec_inst.decrypt(aes_enc, "RSA-OAEP");
-    var aes_key = forge.util.decode64(aes_b64);
+    var aes_key/*b64*/ = this.dec_inst.decrypt(aes_enc, "RSA-OAEP");
+    //var aes_key = forge.util.decode64(aes_b64);
 
     var encrypted = forge.util.decode64(response.data);
     var text = decryptAesGcm(aes_key, encrypted);

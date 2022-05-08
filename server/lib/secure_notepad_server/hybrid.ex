@@ -20,8 +20,8 @@ defmodule SecureNotepadServer.Hybrid do
     {_, private_key} = state()
     %{"key" => aes_key_enc, "data" => text_enc} = request
 
-    {:ok, aes_key_b64} = Apoc.RSA.PrivateKey.decrypt(private_key, aes_key_enc)
-    aes_key = Base.decode64!(aes_key_b64)
+    {:ok, aes_key} = Apoc.RSA.PrivateKey.decrypt(private_key, aes_key_enc)
+    #aes_key = Base.decode64!(aes_key_b64)
 
     {:ok, text} = Apoc.AES.decrypt(text_enc, aes_key)
 
@@ -39,13 +39,13 @@ defmodule SecureNotepadServer.Hybrid do
 
     text_enc = Apoc.AES.encrypt(text, aes_key)
 
-    aes_key_b64 = Base.encode64(aes_key)
+    #aes_key_b64 = Base.encode64(aes_key)
 
     {:ok, public_key} = Apoc.RSA.PublicKey.load_pem(public_key)
 
     aes_key_enc =
       :rsa
-      |> :crypto.public_encrypt(aes_key_b64, to_erlang_type(public_key), :rsa_pkcs1_oaep_padding)
+      |> :crypto.public_encrypt(aes_key, to_erlang_type(public_key), :rsa_pkcs1_oaep_padding)
       |> Apoc.encode()
 
 
