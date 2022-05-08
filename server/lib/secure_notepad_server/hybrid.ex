@@ -42,12 +42,23 @@ defmodule SecureNotepadServer.Hybrid do
     aes_key_b64 = Base.encode64(aes_key)
 
     {:ok, public_key} = Apoc.RSA.PublicKey.load_pem(public_key)
-    {:ok, aes_key_enc} = Apoc.RSA.encrypt(public_key, aes_key_b64)
+
+    aes_key_enc =
+      :rsa
+      |> :crypto.public_encrypt(aes_key_b64, to_erlang_type(public_key), :rsa_pkcs1_oaep_padding)
+      |> Apoc.encode()
+
+
+    #{:ok, aes_key_enc} = Apoc.RSA.encrypt(public_key, aes_key_b64)
 
     %{
       "key" => aes_key_enc,
       "data" => text_enc
     }
+  end
+
+  def to_erlang_type(%Apoc.RSA.PublicKey{modulus: n, public_exponent: e}) do
+    [e, n]
   end
 
   def encrypt_aes(text, key) do
