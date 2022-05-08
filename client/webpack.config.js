@@ -25,15 +25,4 @@ var config = {
 	}
 };
 
-var webLibraries = {
-
-};
-
-for (var toExport in webLibraries) {
-	config.module.rules.push({
-		test: path.resolve(__dirname, 'src', 'lib', webLibraries[toExport]),
-		use: 'exports-loader?type=commonjs&exports=' + toExport
-	});
-}
-
 exports.default = config;

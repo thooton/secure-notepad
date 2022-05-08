@@ -1,20 +1,22 @@
-import { base64ToBytes, bytesToBase64 } from 'byte-base64';
-import * as JSEncrypt from './lib/jsencrypt.min.js';
-import * as aesjs from './lib/aes-js.min.js';
+import * as forge from 'node-forge';
 
 export default function Hybrid(rsa_public) {
     if (!rsa_public) {
         throw new Error('Missing RSA public key');
     }
-    var options = { default_key_size: 512 };
-    this.enc_inst = new JSEncrypt(options);
-    this.enc_inst.setPublicKey(rsa_public);
-
-    this.encoder = new TextEncoder();
-    this.decoder = new TextDecoder();
-
-    this.dec_inst = new JSEncrypt(options);
-    this.public_key = this.dec_inst.getPublicKey();
+    this.enc_inst = forge.pki.publicKeyFromPem(rsa_public);
+}
+Hybrid.prototype.init = function(callback) {
+    var self = this;
+    forge.pki.rsa.generateKeyPair({
+        bits: 4096,
+        workers: -1
+    }, function(err, keyPair) {
+        if (err) throw new Error("Error generating key pair " + err);
+        self.dec_inst = keyPair.privateKey;
+        self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
+        callback();
+    });
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
@@ -23,16 +25,14 @@ Hybrid.prototype.encrypt = function(data, no_public) {
     } else {
         text = data;
     }
-    var aes_key = new Uint8Array(32);
-    JSEncrypt.random.prototype.nextBytes(aes_key);
-
-    var textBytes = this.encoder.encode(text);
-    var aesCtr = new aesjs.ModeOfOperation.ctr(aes_key);
-    var encryptedBytes = aesCtr.encrypt(textBytes);
-    var encryptedb64 = bytesToBase64(encryptedBytes);
     
-    var aes_b64 = bytesToBase64(aes_key);
-    var aes_fin = this.enc_inst.encrypt(aes_b64);
+    var aes_key = forge.random.getBytesSync(32);
+
+    var encryptedb64 = encryptAesGcm(aes_key, text);
+
+    var aes_b64 = forge.util.encode64(aes_key);
+    var aes_enc = this.enc_inst.encrypt(aes_b64, "RSA-OAEP");
+    var aes_fin = forge.util.encode64(aes_enc);
 
     var json: {
         key: string,
@@ -46,17 +46,56 @@ Hybrid.prototype.encrypt = function(data, no_public) {
         json.public_key = this.public_key;
     }
     return json;
-};
+}
 Hybrid.prototype.decrypt = function(response) {
-    var aes_b64 = this.dec_inst.decrypt(response.key);
-    var aes_key = base64ToBytes(aes_b64);
+    var aes_enc = forge.util.decode64(response.key);
+    var aes_b64 = this.dec_inst.decrypt(aes_enc, "RSA-OAEP");
+    console.log("AESB64",aes_b64);
+    var aes_key = forge.util.decode64(aes_b64);
 
-    var encryptedBytes = base64ToBytes(response.data);
-    var aesCtr = new aesjs.ModeOfOperation.ctr(aes_key);
-    var textBytes = aesCtr.decrypt(encryptedBytes);
-
-    var text = this.decoder.decode(textBytes);
+    var encrypted = forge.util.decode64(response.data);
+    var text = decryptAesGcm(aes_key, encrypted);
     var json = JSON.parse(text);
     return json;
-};
+}
 Hybrid.NO_PUBLIC_KEY = true;
+
+function encryptAesGcm(key: string, str: string) {
+    var iv = forge.random.getBytesSync(16);
+    var aad = "AES256GCM";
+
+    var cipher = forge.cipher.createCipher('AES-GCM', key);
+    cipher.start({
+        iv: iv,
+        additionalData: aad,
+        tagLength: 16 * 8
+    });
+    cipher.update(forge.util.createBuffer(str));
+    cipher.finish();
+    var ct = cipher.output.getBytes();
+    var tag = cipher.mode.tag.getBytes();
+
+    return forge.util.encode64(
+        aad.concat(
+            iv, tag, ct
+        )
+    );
+}
+
+function decryptAesGcm(key: string, str: string) {
+    var aad = str.slice(0, 9);
+    var iv = str.slice(9, 25);
+    var tag = str.slice(25, 41);
+    var ct = str.slice(41);
+
+    var decipher = forge.cipher.createDecipher('AES-GCM', key);
+    decipher.start({
+        iv: iv,
+        additionalData: aad,
+        tag: forge.util.createBuffer(tag)
+    });
+    decipher.update(forge.util.createBuffer(ct));
+    decipher.finish();
+
+    return decipher.output.getBytes();
+}

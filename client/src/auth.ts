@@ -73,35 +73,43 @@ $('#login').on('submit', function (e) {
                 }
             };
 
-            setHybrid(new Hybrid(JSON.parse(key)["key"]));
-            user_name = json.username.toString();
-            user_password = hybrid_inst.encrypt(json.password, Hybrid.NO_PUBLIC_KEY);
+            var theHybrid = new Hybrid(JSON.parse(key)["key"]);
+            setHybrid(theHybrid);
             var finalResponse;
+            theHybrid.init(() => {
+                try {
+                    user_name = json.username.toString();
+                    user_password = hybrid_inst.encrypt(json.password, Hybrid.NO_PUBLIC_KEY);
 
-            if (loginPressed) {
-                var encrypted = hybrid_inst.encrypt(json);
-                postRequest('/login', encrypted, function (data) {
-                    try {
-                        finalResponse = JSON.parse(data);
-                        if (finalResponse.key) finalResponse = hybrid_inst.decrypt(finalResponse);
-                        local_finish();
-                    } catch (err) {
-                        handle(err);
-                        console.log(err);
+                    if (loginPressed) {
+                        var encrypted = hybrid_inst.encrypt(json);
+                        postRequest('/login', encrypted, function (data) {
+                            try {
+                                finalResponse = JSON.parse(data);
+                                if (finalResponse.key) finalResponse = hybrid_inst.decrypt(finalResponse);
+                                local_finish();
+                            } catch (err) {
+                                handle(err);
+                                console.log(err);
+                            }
+                        });
+                    } else {
+                        var encrypted = hybrid_inst.encrypt(json, Hybrid.NO_PUBLIC_KEY);
+                        postRequest('/register', encrypted, function (data) {
+                            try {
+                                finalResponse = JSON.parse(data);
+                                local_finish();
+                            } catch (err) {
+                                handle(err);
+                                console.log(err);
+                            }
+                        });
                     }
-                });
-            } else {
-                var encrypted = hybrid_inst.encrypt(json, Hybrid.NO_PUBLIC_KEY);
-                postRequest('/register', encrypted, function (data) {
-                    try {
-                        finalResponse = JSON.parse(data);
-                        local_finish();
-                    } catch (err) {
-                        handle(err);
-                        console.log(err);
-                    }
-                });
-            }
+                } catch (err) {
+                    handle(err);
+                    console.log(err);
+                }
+            }); 
         } catch (err) {
             handle(err);
             console.log(err);
