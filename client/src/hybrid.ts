@@ -19,9 +19,9 @@ Hybrid.prototype.init = function(callback) {
     var jsenc_inst = new JSEncrypt({ default_key_size: 512 });
     jsenc_inst.getKey(function() {
         self.dec_inst = forge.pki.privateKeyFromPem(jsenc_inst.getPrivateKey());
-        self.public_key = forge.pki.publicKeyToPem(
-            forge.pki.publicKeyFromPem(jsenc_inst.getPublicKey())
-        );
+        self.public_key = /*forge.pki.publicKeyToPem(
+            forge.pki.publicKeyFromPem(*/jsenc_inst.getPublicKey();
+        /*);*/
         callback();
     });
     /*console.log("starting generation");
