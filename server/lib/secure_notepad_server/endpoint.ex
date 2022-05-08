@@ -91,8 +91,8 @@ defmodule SecureNotepadServer.Endpoint do
     path = conn.path_info
     path = if path == [], do: "index.html", else: path |> Path.join
     case SecureNotepadServer.Cacher.get_file(path) do
-      {:ok, contents} ->
-        conn |> send_resp(200, contents)
+      {:ok, contents, mime} ->
+        conn |> put_resp_content_type(mime) |> send_resp(200, contents)
       {:err, _} ->
         "404: Page not found"
         |> resp_error(conn, 404)

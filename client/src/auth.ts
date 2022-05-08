@@ -90,7 +90,6 @@ $('#login').on('submit', function (e) {
                                 local_finish();
                             } catch (err) {
                                 handle(err);
-                                console.log(err);
                             }
                         });
                     } else {
@@ -101,18 +100,15 @@ $('#login').on('submit', function (e) {
                                 local_finish();
                             } catch (err) {
                                 handle(err);
-                                console.log(err);
                             }
                         });
                     }
                 } catch (err) {
                     handle(err);
-                    console.log(err);
                 }
             }); 
         } catch (err) {
             handle(err);
-            console.log(err);
         }
     });
 });

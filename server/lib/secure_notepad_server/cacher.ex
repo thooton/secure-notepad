@@ -9,7 +9,12 @@ defmodule SecureNotepadServer.Cacher do
       |> Path.join("public")
       |> Path.expand
     table = :ets.new(:file_cacher, [:set, :public])
-    Agent.start_link(fn -> {public, table} end, name: __MODULE__)
+    mime =
+      :code.priv_dir(:secure_notepad_server)
+      |> Path.join("mime.json")
+      |> File.read!
+      |> Poison.decode!
+    Agent.start_link(fn -> {public, table, mime} end, name: __MODULE__)
   end
 
   defp state do
@@ -17,7 +22,8 @@ defmodule SecureNotepadServer.Cacher do
   end
 
   def get_file(filename) do
-    {public, table} = state()
+    {public, table, _} = state()
+    mime = get_mime(filename)
     filepath = public |> Path.join(filename) |> Path.expand
     if filepath |> String.starts_with?(public) do
       case :ets.lookup(table, filepath) do
@@ -25,16 +31,22 @@ defmodule SecureNotepadServer.Cacher do
           case File.read(filepath) do
             {:ok, contents} ->
               :ets.insert_new(table, {filepath, contents})
-              {:ok, contents}
+              {:ok, contents, mime}
             {:error, error} ->
               {:err, error}
           end
         [{_, contents}] ->
-          {:ok, contents}
+          {:ok, contents, mime}
       end
     else
       {:err, :eacces}
     end
 
+  end
+
+  defp get_mime(filename) do
+    {_, _, mime_mappings} = state()
+    extension = filename |> String.split(".") |> List.last("txt")
+    mime_mappings[extension] || mime_mappings["txt"]
   end
 end
