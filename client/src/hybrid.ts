@@ -1,5 +1,5 @@
 import * as forge from './lib/forge';
-import * as JSEncrypt from './lib/jsencrypt.min.js';
+//import * as JSEncrypt from './lib/jsencrypt.min.js';
 
 export default function Hybrid(rsa_public) {
     if (!rsa_public) {
@@ -9,13 +9,12 @@ export default function Hybrid(rsa_public) {
 }
 Hybrid.prototype.init = function(callback) {
     var self = this;
-    JSEncrypt.random.prototype.nextBytes = function(arr) {
+    /*JSEncrypt.random.prototype.nextBytes = function(arr) {
         var len = arr.length;
         var rnd = forge.random.getBytesSync(len);
         for (var i = 0; i < len; i++) {
             arr[i] = rnd.charCodeAt(i);
         }
-        console.log(arr);
     }
     var jsenc_inst = new JSEncrypt({ default_key_size: 2048 });
     jsenc_inst.getKey(function() {
@@ -24,8 +23,8 @@ Hybrid.prototype.init = function(callback) {
             forge.pki.publicKeyFromPem(jsenc_inst.getPublicKey())
         );
         callback();
-    });
-    /*forge.pki.rsa.generateKeyPair({
+    });*/
+    forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
     }, function(err, keyPair) {
@@ -33,7 +32,7 @@ Hybrid.prototype.init = function(callback) {
         self.dec_inst = keyPair.privateKey;
         self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
         callback();
-    });*/
+    });
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
