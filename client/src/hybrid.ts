@@ -24,10 +24,12 @@ Hybrid.prototype.init = function(callback) {
         );
         callback();
     });*/
+    console.log("starting generation");
     var keyPair = forge.pki.rsa.generateKeyPair(512);
     self.dec_inst = keyPair.privateKey;
     self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
     callback();
+    console.log("ended generation");
     /*forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
