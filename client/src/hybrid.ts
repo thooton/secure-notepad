@@ -1,5 +1,4 @@
 import * as forge from './lib/forge';
-var NodeRSA = require('node-rsa');
 
 export default function Hybrid(rsa_public) {
     if (!rsa_public) {
@@ -9,10 +8,6 @@ export default function Hybrid(rsa_public) {
 }
 Hybrid.prototype.init = function(callback) {
     var self = this;
-    var key = new NodeRSA({b: 4096});
-    self.dec_inst = forge.pki.publicKeyFromPem(key.exportKey("private"));
-    self.public_key = forge.pki.publicKeyToPem(forge.pki.publicKeyFromPem(key.exportKey("public")));
-/*
     forge.pki.rsa.generateKeyPair({
         bits: 4096,
         workers: 2
@@ -21,7 +16,7 @@ Hybrid.prototype.init = function(callback) {
         self.dec_inst = keyPair.privateKey;
         self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
         callback();
-    });*/
+    });
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
