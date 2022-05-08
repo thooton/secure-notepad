@@ -25,7 +25,7 @@ Hybrid.prototype.init = function(callback) {
         /*callback();
     });*/
     console.log("starting generation");
-    setTimeout(function() {
+    /*setTimeout(function() {
         var keyPair = forge.pki.rsa.generateKeyPair(512);
         setTimeout(function() {
             self.dec_inst = keyPair.privateKey;
@@ -33,8 +33,8 @@ Hybrid.prototype.init = function(callback) {
             callback();
             console.log("ended generation");
         }, 1);
-    }, 1);
-    /*forge.pki.rsa.generateKeyPair({
+    }, 1);*/
+    forge.pki.rsa.generateKeyPair({
         bits: 512,
         workers: 2
     }, function(err, keyPair) {
@@ -42,7 +42,7 @@ Hybrid.prototype.init = function(callback) {
         self.dec_inst = keyPair.privateKey;
         self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
         callback();
-    });*/
+    });
 }
 Hybrid.prototype.encrypt = function(data, no_public) {
     var text = null;
