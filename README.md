@@ -4,6 +4,8 @@ This is a self-hosted notepad application that focuses on security. It allows no
 
 It is forked from AmitMerchant's [offline-capable minimalist notepad](https://github.com/amitmerchant1990/notepad).
 
+The client is written in TypeScript, while the server is written in Elixir.
+
 ## Screenshots
 
 ![Login](ss2.png?raw=true)
@@ -61,13 +63,13 @@ WantedBy=multi-user.target
 
 ## Security
 
-When the user sends their notes to the server for storage, they also send their password. The server hashes the password with Argon2id (via [node-argon2](https://github.com/ranisalt/node-argon2)), and utilizes it as an AES-256 encryption key for the user's notepad data, which is stored in its database.
+When the user sends their notes to the server for storage, they also send their password. The server hashes the password with Argon2id (via [argon2_elixir](https://github.com/riverrun/argon2_elixir)), and utilizes it as an AES-256 encryption key for the user's notepad data, which is stored in its database.
 
 In addition, if the option 'Enhanced security' is selected on the login page, the client and the server will, when sending sensitive data, communicate using a hybrid RSA and AES encryption system (as described in [this StackOverflow answer](https://stackoverflow.com/a/5868456/6917530)) in order to minimize the risk of sensitive data being stored in plain text e.g. in web server logs, and to provide a rudimentary protection against request logging by malicious extensions.
 
 For RSA and AES, on the client-side, [forge](https://github.com/digitalbazaar/forge) is used, while on the server-side, [apoc](https://github.com/coderdan/apoc) is used. RSA keys are 4096-bit, AES is AES-GCM.
 
-Although the client stores the user password as a Javascript variable, it is stored in its encrypted form, and so if extracted cannot be used to gain access to other applications or websites.
+Although the client stores the user password as a Javascript variable, if 'Enhanced security' is selected, it is stored in its encrypted form, and so if extracted cannot be used to gain access to other applications or websites.
 
 ## Development
 
