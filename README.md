@@ -26,9 +26,9 @@ The client is written in TypeScript, while the server is written in Elixir.
 
 The configuration files are located in `/sbuild/(platform)/lib/secure_notepad_server-0.1.0/priv/`. (Sorry)
 
-The settings for the Argon2id hashing function, as set in config.json, must be determined based on individual hardware requirements. 
+The settings for the Argon2id hashing function, as set in `config.json`, must be determined based on individual hardware requirements. 
 
-A helper program, `/argon2id_calibration` can be used to recommend the settings for Argon2id. It loosely follows the guidelines in the [argon2 specifications](https://www.password-hashing.net/argon2-specs.pdf) under 'Recommended parameters':
+A helper program, `/argon2id_calibrate` can be used to recommend the settings for Argon2id. It loosely follows the guidelines in the [argon2 specifications](https://www.password-hashing.net/argon2-specs.pdf) under 'Recommended parameters':
 - It asks the user for the number of CPU cores, amount of memory, and time that they wish to dedicate to each Argon2id call.
 - It sets the number of threads used by each call to twice the number of CPU cores the user dedicated (According to [some](https://www.twelve21.io/how-to-choose-the-right-parameters-for-argon2/) [websites](https://www.ory.sh/choose-recommended-argon2-parameters-password-hashing/), this seems to be a good general guideline).
 - It will begin at two passes and slowly work upwards until it reaches the maximum number of passes so that the hash runtime does not exceed the time the user wished to spend. (If two passes exceeds, it will ask the user to allocate less memory).
