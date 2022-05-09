@@ -8,6 +8,7 @@ export default function Hybrid(rsa_public) {
 }
 Hybrid.prototype.init = function(enhanced_security, callback) {
     var self = this;
+    self.enhanced_security = enhanced_security ? true : false;
     if (enhanced_security) {
         forge.pki.rsa.generateKeyPair({
             bits: 4096,
@@ -18,9 +19,9 @@ Hybrid.prototype.init = function(enhanced_security, callback) {
             self.public_key = forge.pki.publicKeyToPem(keyPair.publicKey);
             callback();
         });
+    } else {
+        callback();
     }
-    self.enhanced_security = enhanced_security ? true : false;
-    callback();
 }
 interface EncryptedResponse {
     key: string,
