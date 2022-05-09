@@ -28,7 +28,10 @@ defmodule SecureNotepadServer.Hybrid do
       {:ok, text} = Apoc.AES.decrypt(text_enc, aes_key)
 
       if json do
-        Poison.decode!(text) |> Map.merge(%{"public_key" => request["public_key"]})
+        Poison.decode!(text) |> Map.merge(%{
+          "public_key" => request["public_key"],
+          "enhanced_security" => enhanced_security
+        })
       else
         text
       end
@@ -36,7 +39,7 @@ defmodule SecureNotepadServer.Hybrid do
       if json do
         text_enc |> Map.merge(%{
           "public_key" => request["public_key"],
-          "enhanced_security" => request["enhanced_security"]
+          "enhanced_security" => enhanced_security
         })
       else
         text_enc
