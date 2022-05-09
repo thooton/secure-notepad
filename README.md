@@ -65,7 +65,7 @@ When the user sends their notes to the server for storage, they also send their 
 
 In addition, if the option 'Enhanced security' is selected on the login page, the client and the server will, when sending sensitive data, communicate using a hybrid RSA and AES encryption system (as described in [this StackOverflow answer](https://stackoverflow.com/a/5868456/6917530)) in order to minimize the risk of sensitive data being stored in plain text e.g. in web server logs, and to provide a rudimentary protection against request logging by malicious extensions.
 
-For RSA and AES, on the client-side, [forge](https://github.com/digitalbazaar/forge) is used, while on the server-side, [apoc](https://github.com/coderdan/apoc) is used. RSA keys are 2048-bit, AES is AES-GCM.
+For RSA and AES, on the client-side, [forge](https://github.com/digitalbazaar/forge) is used, while on the server-side, [apoc](https://github.com/coderdan/apoc) is used. RSA keys are 4096-bit, AES is AES-GCM.
 
 Although the client stores the user password as a Javascript variable, it is stored in its encrypted form, and so if extracted cannot be used to gain access to other applications or websites.
 

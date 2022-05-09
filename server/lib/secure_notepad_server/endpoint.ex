@@ -41,7 +41,8 @@ defmodule SecureNotepadServer.Endpoint do
   end
 
   post "/login" do
-    %{"username" => username, "password" => password, "public_key" => public_key}
+    %{"username" => username, "password" => password,
+      "public_key" => public_key, "enhanced_security" => enhanced_security}
       = get_enc_body(conn)
 
     case validate_and_get_entry(username, password) do
@@ -49,7 +50,7 @@ defmodule SecureNotepadServer.Endpoint do
         if notes_enc != nil do
           aes_key = Argon2w.hash_raw(password, note_salt)
           notes = Hybrid.decrypt_aes(notes_enc, aes_key)
-          Hybrid.encrypt(%{"success" => true, "notes" => notes}, public_key)
+          Hybrid.encrypt(%{"success" => true, "notes" => notes}, public_key, enhanced_security)
           |> resp_json(conn)
         else
           resp_success(conn)
@@ -73,7 +74,8 @@ defmodule SecureNotepadServer.Endpoint do
   end
 
   post "/save" do
-    %{"username" => username, "password" => password_enc, "notes" => notes}
+    %{"username" => username, "password" => password_enc,
+      "notes" => notes}
       = get_enc_body(conn)
     password = password_enc |> Hybrid.decrypt(false)
     case validate_and_get_entry(username, password) do

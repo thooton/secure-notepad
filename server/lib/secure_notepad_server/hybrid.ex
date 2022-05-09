@@ -18,47 +18,56 @@ defmodule SecureNotepadServer.Hybrid do
 
   def decrypt(request, json) do
     {_, private_key} = state()
-    %{"key" => aes_key_enc, "data" => text_enc} = request
+    %{"key" => aes_key_enc, "data" => text_enc, "enhanced_security" => enhanced_security}
+      = request
 
-    {:ok, aes_key_b64} = Apoc.RSA.PrivateKey.decrypt(private_key, aes_key_enc)
-    aes_key = Base.decode64!(aes_key_b64)
+    if enhanced_security do
+      {:ok, aes_key_b64} = Apoc.RSA.PrivateKey.decrypt(private_key, aes_key_enc)
+      aes_key = Base.decode64!(aes_key_b64)
 
-    {:ok, text} = Apoc.AES.decrypt(text_enc, aes_key)
+      {:ok, text} = Apoc.AES.decrypt(text_enc, aes_key)
 
-    if json do
-      Poison.decode!(text) |> Map.merge(%{"public_key" => request["public_key"]})
+      if json do
+        Poison.decode!(text) |> Map.merge(%{"public_key" => request["public_key"]})
+      else
+        text
+      end
     else
-      text
+      if json do
+        text_enc |> Map.merge(%{
+          "public_key" => request["public_key"],
+          "enhanced_security" => request["enhanced_security"]
+        })
+      else
+        text_enc
+      end
+
     end
+
+
   end
 
-  def encrypt(data, public_key) do
-    text = Poison.encode!(data)
+  def encrypt(data, public_key, enhanced_security) do
+    if enhanced_security do
+      text = Poison.encode!(data)
 
-    aes_key = :crypto.strong_rand_bytes(32)
+      aes_key = :crypto.strong_rand_bytes(32)
 
-    text_enc = Apoc.AES.encrypt(text, aes_key)
+      text_enc = Apoc.AES.encrypt(text, aes_key)
 
-    aes_key_b64 = Base.encode64(aes_key)
+      aes_key_b64 = Base.encode64(aes_key)
 
-    {:ok, public_key} = Apoc.RSA.PublicKey.load_pem(public_key)
+      {:ok, public_key} = Apoc.RSA.PublicKey.load_pem(public_key)
+      {:ok, aes_key_enc} = Apoc.RSA.encrypt(public_key, aes_key_b64)
 
-    aes_key_enc =
-      :rsa
-      |> :crypto.public_encrypt(aes_key_b64, to_erlang_type(public_key), :rsa_pkcs1_oaep_padding)
-      |> Apoc.encode()
+      %{
+        "key" => aes_key_enc,
+        "data" => text_enc
+      }
+    else
+      data
+    end
 
-
-    #{:ok, aes_key_enc} = Apoc.RSA.encrypt(public_key, aes_key_b64)
-
-    %{
-      "key" => aes_key_enc,
-      "data" => text_enc
-    }
-  end
-
-  def to_erlang_type(%Apoc.RSA.PublicKey{modulus: n, public_exponent: e}) do
-    [e, n]
   end
 
   def encrypt_aes(text, key) do
