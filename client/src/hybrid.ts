@@ -20,6 +20,7 @@ Hybrid.prototype.init = function(enhanced_security, callback) {
         });
     }
     self.enhanced_security = enhanced_security ? true : false;
+    callback();
 }
 interface EncryptedResponse {
     key: string,
