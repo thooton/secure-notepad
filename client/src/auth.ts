@@ -1,7 +1,7 @@
 import { setHybrid, setNotes, hybrid_inst } from "./index";
 import Hybrid from "./hybrid";
 import { setScreen } from "./screen";
-import { updateNotes } from "./notes";
+import { updateNotes, registerAutosave } from "./notes";
 import { getId, getRequest, postRequest } from "./utils";
 import * as $ from 'jquery';
 
@@ -63,9 +63,10 @@ $('#login').on('submit', function (e) {
                     try {
                         setNotes(JSON.parse(finalResponse.notes) || {});
                     } catch (err) {}
-
+                    
                     updateNotes();
                     setScreen('list');
+                    registerAutosave();
                 } else if (finalResponse.error) {
                     throw new Error(finalResponse.error);
                 } else {

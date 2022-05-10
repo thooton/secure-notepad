@@ -65,6 +65,21 @@ function renameDialog(id: string, callback: Function) {
     });
 }
 
+export function registerAutosave() {
+    setTimeout(function() {
+        var activityNoticed = false;
+        $(document).on('keypress', function() {
+            activityNoticed = true;
+        });
+        setInterval(function() {
+            if (activityNoticed) {
+                activityNoticed = false;
+                saveNote(currentId);
+            }
+        }, 60000);
+    }, 1);
+}
+
 $('#backButton').on('click', function () {
     setScreen('list');
     saveNote(currentId);
